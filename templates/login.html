@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - thriftstorecol</title>
+    <title>Iniciar Sesión - thriftstorecol</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -22,46 +22,30 @@
     <main>
         <div class="auth-container">
             <div class="auth-box">
-                <h2>Crear Cuenta</h2>
-                <p class="auth-subtitle">Únete a la comunidad de moda sostenible</p>
+                <h2>Iniciar Sesión</h2>
+                <p class="auth-subtitle">Bienvenido de nuevo a thriftstorecol</p>
 
-                <form id="registroForm">
-                    <div class="form-group">
-                        <label for="nombre">Nombre Completo</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                    </div>
-
+                <form id="loginForm">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="telefono">Teléfono (opcional)</label>
-                        <input type="tel" id="telefono" name="telefono">
-                    </div>
-
-                    <div class="form-group">
                         <label for="password">Contraseña</label>
                         <input type="password" id="password" name="password" required>
-                        <small>Mínimo 8 caracteres, incluir mayúscula, minúscula y número</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm_password">Confirmar Contraseña</label>
-                        <input type="password" id="confirm_password" name="confirm_password" required>
                     </div>
 
                     <div id="error-message" class="error-message" style="display: none;"></div>
 
-                    <button type="submit" class="btn-primary" id="registroBtn">
-                        <span>Crear Cuenta</span>
+                    <button type="submit" class="btn-primary" id="loginBtn">
+                        <span>Iniciar Sesión</span>
                         <i class="fas fa-spinner fa-spin" style="display: none;"></i>
                     </button>
                 </form>
 
                 <div class="auth-footer">
-                    <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a></p>
+                    <p>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
                 </div>
             </div>
         </div>
@@ -73,33 +57,23 @@
     </footer>
 
     <script>
-        const registroForm = document.getElementById('registroForm');
+        const loginForm = document.getElementById('loginForm');
         const errorMessage = document.getElementById('error-message');
-        const registroBtn = document.getElementById('registroBtn');
+        const loginBtn = document.getElementById('loginBtn');
 
-        registroForm.addEventListener('submit', async (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Validar que las contraseñas coincidan
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm_password').value;
-
-            if (password !== confirmPassword) {
-                errorMessage.textContent = 'Las contraseñas no coinciden';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
             // Mostrar loading
-            registroBtn.querySelector('span').style.display = 'none';
-            registroBtn.querySelector('i').style.display = 'inline-block';
-            registroBtn.disabled = true;
+            loginBtn.querySelector('span').style.display = 'none';
+            loginBtn.querySelector('i').style.display = 'inline-block';
+            loginBtn.disabled = true;
             errorMessage.style.display = 'none';
 
-            const formData = new FormData(registroForm);
+            const formData = new FormData(loginForm);
 
             try {
-                const response = await fetch('/api/auth/registro', {
+                const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     body: formData
                 });
@@ -107,37 +81,40 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Registro exitoso
-                    window.location.href = '/';
+                    // Login exitoso
+                    if (data.usuario.rol === 'admin') {
+                        window.location.href = '/admin';
+                    } else {
+                        window.location.href = '/';
+                    }
                 } else {
                     // Error
-                    errorMessage.textContent = data.detail || 'Error al registrarse';
+                    errorMessage.textContent = data.detail || 'Error al iniciar sesión';
                     errorMessage.style.display = 'block';
 
                     // Resetear botón
-                    registroBtn.querySelector('span').style.display = 'inline';
-                    registroBtn.querySelector('i').style.display = 'none';
-                    registroBtn.disabled = false;
+                    loginBtn.querySelector('span').style.display = 'inline';
+                    loginBtn.querySelector('i').style.display = 'none';
+                    loginBtn.disabled = false;
                 }
             } catch (error) {
                 errorMessage.textContent = 'Error de conexión. Intenta de nuevo.';
                 errorMessage.style.display = 'block';
 
                 // Resetear botón
-                registroBtn.querySelector('span').style.display = 'inline';
-                registroBtn.querySelector('i').style.display = 'none';
-                registroBtn.disabled = false;
+                loginBtn.querySelector('span').style.display = 'inline';
+                loginBtn.querySelector('i').style.display = 'none';
+                loginBtn.disabled = false;
             }
         });
     </script>
 
-<form method="post" action="/registro">
-    <input type="text" name="nombre" placeholder="Nombre" required>
+<form method="post" action="/login">
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="contraseña" placeholder="Contraseña" required>
-    <button type="submit">Registrarse</button>
+    <button type="submit">Iniciar Sesión</button>
 </form>
-<p>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+<p>¿No tienes cuenta? <a href="/registro">Regístrate</a></p>
 
 </body>
 </html>
