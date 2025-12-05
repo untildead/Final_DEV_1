@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sigmotoa FC</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+    <nav>
+        <a href="/" class="logo">sigmotoa FC</a>
+        <div class="nav-icons">
+            <a href="/" title="Inicio">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+    </nav>
+</header>
+
+    <main class="admin-container">
+        
+        <section class="agregar-jugador">
+            {% if producto_editar %}
+            <h2>Editar jugador</h2>
+            {% else %}
+            <h2>Agregar nuevo jugador</h2>
+            {% endif %}
+
+            <form>
+                
+                <input type="text" name="nombre" placeholder="Nombre completo *" value="{{ jugador_editar.nombre if jugador_editar else '' }}" required>
+
+                <input type="number" name="numero" placeholder="Número de la camiseta *" value="{{ jugador_editar.numero if jugador_editar else '' }}" required min="1">
+
+                <input type="number" name="fechaedad" placeholder="Fecha de nacimiento *" value="{{ jugador_editar.fechaedad if jugador_editar else '' }}" required>
+
+                <input type="text" name="nacionalidad" placeholder="Nacionalidad *" value="{{ jugador_editar.nacionalidad if jugador_editar else '' }}" required>
+
+                {% if producto_editar %}
+                <button type="submit" style="background: var(--light-wine);">ACTUALIZAR JUGADOR</button>
+                <a href="/admin" style="grid-column: 1 / -1; text-align: center; padding: 1rem; background: var(--medium-gray); color: var(--white); text-decoration: none; border-radius: 4px; font-weight: 600;">CANCELAR</a>
+                {% else %}
+                <button type="submit">AGREGAR JUGADOR</button>
+                {% endif %}
+            </form>
+        </section>
+
+        <section class="lista-productos">
+            <h2>Inventario Actual</h2>
+            {% if productos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Talla</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td><strong>#{{ producto.id }}</strong></td>
+                        <td>
+                            <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}"
+                                 style="width: 70px; height: 70px; object-fit: cover; border-radius: 4px; border: 1px solid var(--wine);"
+                                 onerror="this.src='https://images.unsplash.com/photo-1445205170230-053b83016050?w=100&h=100&fit=crop'">
+                        </td>
+                        <td><strong>{{ producto.nombre }}</strong></td>
+                        <td><span style="color: var(--light-wine);">{{ producto.categoria }}</span></td>
+                        <td style="color: var(--wine); font-weight: 700; font-size: 1.1rem;">${{ producto.precio|format_cop }} COP</td>
+                        <td>{{ producto.talla }}</td>
+                        <td>
+                            {% if producto.stock == 0 %}
+                            <span style="color: #8B0000;">Agotado</span>
+                            {% elif producto.stock == 1 %}
+                            <span style="color: var(--light-wine);">1 (única)</span>
+                            {% elif producto.stock < 3 %}
+                            <span style="color: var(--light-wine);">{{ producto.stock }}</span>
+                            {% else %}
+                            <span style="color: var(--light-gray);">{{ producto.stock }}</span>
+                            {% endif %}
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <a href="/admin/editar/{{ producto.id }}"
+                               style="background: var(--wine); color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; display: inline-block; margin-right: 0.5rem; font-size: 0.85rem; font-weight: 600;">
+                                Editar
+                            </a>
+                            <a href="/admin/eliminar/{{ producto.id }}"
+                               class="btn-delete"
+                               style="padding: 0.5rem 1rem; font-size: 0.85rem; display: inline-block;"
+                               onclick='return confirm("¿Seguro que quieres eliminar este producto?")'>
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="text-align: center; color: var(--light-gray); padding: 3rem;">
+                No hay productos. Agrega tu primera pieza vintage arriba.
+            </p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>thriftstorecol · Admin Panel</p>
+    </footer>
+</body>
+</html>
