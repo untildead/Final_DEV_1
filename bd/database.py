@@ -4,7 +4,7 @@ DATABASE_URL = "sqlite:///./base_datos.db"
 motor = create_engine(DATABASE_URL, echo=True)
 
 def crear_bd_y_tablas():
-    SQLModel.metadata.create_all(motor)
+    SQLModel.metadata.create_all(motor, checkfirst=True)
 
 def obtener_sesion():
     with Session(motor) as sesion:
