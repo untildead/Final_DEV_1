@@ -9,8 +9,8 @@
 Frontend (HTML) Alojado en render
            ↓
     FastAPI Routers
-    ├── /api/jugadores        (CRUD + filtros)
-    ├── /api/partidos         (CRUD + filtros)
+    ├── /api/jugadores        (CRUD)
+    ├── /api/partidos         (CRUD)
            ↓
   SQLite de forma local 
 ```
