@@ -1,8 +1,1 @@
-ya estas?
-si ya clone en visual
-
-voy a ir haciendo el crear del rf01
-
-mandale la foto a kevin y lo metes al repo y el nos va mandadno codigo por aqui jashbajhb
-
-habla por aqui que no tengo el celular
+no hables por aqui si algo haz pull request en el proyecto
