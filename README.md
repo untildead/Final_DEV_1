@@ -1,17 +1,18 @@
-Instalación y Ejecución Local
-    1. Clonar y preparar entorno
-    # Windows PowerShell
-    git clone https://github.com/untildead/Final_DEV_1.git
-    cd sleephabits-main
-    python -m venv .venv
-    .venv\Scripts\Activate.ps1
-    pip install -r requirements.txt
+# Instalación y Ejecución Local
 
-    # Linux/Mac
-    source .venv/bin/activate
-    pip install -r requirements.txt
+## 1. Clonar y preparar el entorno
 
-2. Ejecutar la aplicación
+### Windows PowerShell
+```powershell
+git clone https://github.com/untildead/Final_DEV_1.git
+cd Final_DEV_1
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 
-    uvicorn main:app --reload
 
+git clone https://github.com/untildead/Final_DEV_1.git
+cd Final_DEV_1
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
