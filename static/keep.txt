@@ -1,0 +1,1 @@
+Este documento es unicamente para que github reciba la carpeta static
