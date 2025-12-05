@@ -6,7 +6,7 @@ class Jugador(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     nombre: str
     numero: int
-    fecha_nacimiento: date
+    fecha_nacimiento: str
     nacionalidad: str
     altura: float
     peso: float
