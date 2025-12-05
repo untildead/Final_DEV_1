@@ -1,11 +1,8 @@
-# Windows PowerShell
-git clone [https://github.com/untildead/Final_DEV_1.git]
-cd Final_DEV_1
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+ya estas?
+si ya clone en visual
 
-# Linux/Mac
-source .venv/bin/activate
-pip install -r requirements.txt
+voy a ir haciendo el crear del rf01
 
+mandale la foto a kevin y lo metes al repo y el nos va mandadno codigo por aqui jashbajhb
+
+habla por aqui que no tengo el celular
