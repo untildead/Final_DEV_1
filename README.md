@@ -8,3 +8,4 @@ pip install -r requirements.txt
 # Linux/Mac
 source .venv/bin/activate
 pip install -r requirements.txt
+
